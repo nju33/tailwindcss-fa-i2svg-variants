@@ -1,13 +1,20 @@
-name: Test
+name: 'Npm Package'
 
 on:
-  push:
+  release:
+    types:
+      - created
 
 jobs:
   build:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
+      - name: setup Node for Github Actions
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -18,14 +25,13 @@ jobs:
           key: yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             yarn-
-      - run: echo "$(yarn bin)" >> $GITHUB_PATH
       - run: yarn
       - run: yarn build
       - uses: actions/cache@v2
-        id: browser-stack-local-cache
+        id: brower-stack-local-cache
         with:
           path: bin
-          key: v1-browser-stack-local-cache
+          key: v1-brower-stack-local-cache
       - if: steps.browser-stack-local-cache.outputs.cache-hit != 'true'
         run: |
           curl -sSfO https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
@@ -36,3 +42,4 @@ jobs:
           username: ${{ secrets.BROWSERSTACK_USERNAME }}
           access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
       - run: yarn ci:test
+      - run: yarn publish --tag "$(node -p 'require(`./package.json`).version')"

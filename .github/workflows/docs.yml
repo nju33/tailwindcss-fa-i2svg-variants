@@ -1,17 +1,9 @@
 name: Docs
 
 on:
-  push:
-    branches-ignore:
-      - '**'
-    tags:
-      - 'v*'
-    paths:
-      - 'src/**.js'
-      - 'src/**.jsx'
-      - 'src/**.ts'
-      - 'src/**.tsx'
-      - 'src/**.json'
+  release:
+    types:
+      - created
 
 jobs:
   build:

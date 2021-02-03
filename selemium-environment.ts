@@ -27,52 +27,75 @@ export default class CustomEnvironment extends NodeEnvironment {
       browser_version: 'latest',
       os: 'OS X',
       name: 'tailwindcss-fa-svg-loading-variants',
-      build: 'tailwindcss-fa-svg-loading-variants - test',
-      'browserstack.user': process.env.BROWSERSTACK_USER as string,
-      'browserstack.key': process.env.BROWSERSTACK_KEY as string,
+      build: process.env.BROWSERSTACK_BUILD_NAME as string,
+      project: process.env.BROWSERSTACK_PROJECT_NAME as string,
+      'browserstack.localIdentifier': process.env
+        .BROWSERSTACK_LOCAL_IDENTIFIER as string,
+      'browserstack.user': process.env.BROWSERSTACK_USERNAME as string,
+      'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY as string,
       'browserstack.local': 'true'
     }
   }
 
   async setup(): Promise<void> {
     await super.setup()
-    this.global.driver = this.driver = new Builder()
-      .usingServer('http://hub-cloud.browserstack.com/wd/hub')
-      .withCapabilities(this.capabilities)
-      .build()
 
-    this.app = express()
-    this.app.use(express.static(path.join(__dirname, 'src')))
-    await new Promise<void>((resolve) => {
-      this.appServer = this.app?.listen(process.env.PORT ?? 58679, resolve)
-    })
+    console.log('Setup...')
 
     this.local = new browserstack.Local()
     await new Promise<void>((resolve) => {
       this.local?.start(
         {
-          key: process.env.BROWSERSTACK_KEY,
-          proxyHost: '127.0.0.1',
-          proxyPort: process.env.PORT ?? '58679'
+          binarypath: path.join(__dirname, 'bin/BrowserStackLocal'),
+          key: process.env.BROWSERSTACK_ACCESS_KEY,
+          verbose: true,
+          localIdentifier: process.env.BROWSERSTACK_LOCAL_IDENTIFIER
         },
-        function () {
+        (error) => {
+          if (error instanceof Error) {
+            throw error
+          }
           console.log('Started BrowserStackLocal')
           resolve()
         }
       )
     })
+
+    this.app = express()
+    this.app.use(express.static(path.join(__dirname, 'src')))
+    await new Promise<void>((resolve) => {
+      this.appServer = this.app?.listen(process.env.PORT ?? 58679, () => {
+        console.log(
+          `Launched the server listening on ${process.env.PORT ?? '58679'}`
+        )
+        resolve()
+      })
+    })
+
+    this.global.driver = this.driver = new Builder()
+      .usingServer('http://hub-cloud.browserstack.com/wd/hub')
+      .withCapabilities(this.capabilities)
+      .build()
   }
 
   async teardown(): Promise<void> {
+    await super.teardown()
+
+    console.log('Teardown...')
+
+    await this.driver?.quit()
+    await new Promise<void>((resolve) => {
+      this.appServer?.close(() => {
+        console.log('Stopped the server')
+        resolve()
+      })
+    })
     await new Promise<void>((resolve) => {
       this.local?.stop(function () {
         console.log('Stopped BrowserStackLocal')
         resolve()
       })
     })
-    await this.appServer?.close()
-    await this.driver?.quit()
-    await super.teardown()
   }
 
   runScript<T>(script: Script): T {

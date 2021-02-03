@@ -22,7 +22,7 @@
     "!*.config.js"
   ],
   "scripts": {
-    "build": "run-p build-*",
+    "build": "run-s build-ts build-css build-ts-for-jest",
     "build-ts": "tsc -p tsconfig.build.json",
     "build-ts-for-jest": "tsc -p tsconfig.jest-environment.json",
     "build-css": "postcss src/__tests__/fixtures/style.css -o src/__tests__/fixtures/style.build.css",
