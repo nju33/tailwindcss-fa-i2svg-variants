@@ -29,22 +29,18 @@ jobs:
         with:
           path: bin
           key: v1-brower-stack-local-cache
-      -
-        if: steps.browser-stack-local-cache.outputs.cache-hit != "true"
+      - if: steps.browser-stack-local-cache.outputs.cache-hit != 'true'
         run: |
           curl -O https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
           mkdir bin
           (cd bin && unzip BrowserStackLocal-linux-x64.zip)
       - id: browser-stack-local
         run: |
-          ./bin/BrowserStackLocal --key "${{ secrets.BROWSERSTACK_ACCESS_KEY }}" &
-          echo "::set-output name=pid::${!}"
-      - id: browser-stack-local
-        run: |
-          curl -O https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
-          mkdir bin
-          (cd bin && unzip BrowserStackLocal-linux-x64.zip)
           ./bin/BrowserStackLocal --key "${{ secrets.BROWSERSTACK_ACCESS_KEY }}" &
           echo "::set-output name=pid::${!}"
       - run: yarn ci:test
+        env:
+          BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          PORT: 58679
       - run: kill -9 ${{ steps.browser-stack-local.outputs.pid }}
