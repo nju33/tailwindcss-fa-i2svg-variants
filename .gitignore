@@ -1,4 +1,6 @@
-/dist
+/out
+/selemium-environment.js
+style.build.css
 
 ### https://raw.github.com/github/gitignore/3df9bc0bd9cb0c3f5ea0904e88b9df5a378ccd59/Node.gitignore
 

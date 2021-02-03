@@ -1,1 +1,3 @@
-export default {}
+import { faSvgLoadingVariantsPlugin } from './plugin'
+
+export = faSvgLoadingVariantsPlugin

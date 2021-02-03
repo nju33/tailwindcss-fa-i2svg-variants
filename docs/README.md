@@ -1,6 +1,6 @@
-# tailwindcss-fa-i2svg-variants
+tailwindcss-fa-svg-loading-variants / [Exports](modules.md)
 
-A plugin is to add some variants for Font Awesome kit on svg technology.
+# tailwindcss-fa-i2svg-variants
 
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
