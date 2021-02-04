@@ -2,6 +2,7 @@
 
 A plugin is to add some variants for Font Awesome kit on svg technology.
 
+![Test](https://github.com/nju33/tailwindcss-fa-i2svg-variants/workflows/Test/badge.svg)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
