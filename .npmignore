@@ -1,0 +1,14 @@
+.github
+.vscode
+bin
+out
+*rc
+*rc.js
+*.config.js
+.eslintignore
+.env.default
+.editorconfig
+.gitattributes
+.prettierignore
+tsconfig.*.json
+tsconfig.json
