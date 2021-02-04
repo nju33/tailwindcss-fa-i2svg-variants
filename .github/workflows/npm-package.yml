@@ -35,4 +35,6 @@ jobs:
             yarn-
       - run: yarn
       - run: yarn build
-      - run: yarn publish --tag "$(node -p 'require(`./package.json`).version')"
+      - run: yarn publish --new-version "$(node -p 'require(`./package.json`).version')" --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
