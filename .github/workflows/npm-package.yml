@@ -1,9 +1,17 @@
 name: 'Npm Package'
 
 on:
-  release:
-    types:
-      - created
+  push:
+    branches-ignore:
+      - '**'
+    tags:
+      - 'v*'
+    paths:
+      - 'src/**.js'
+      - 'src/**.jsx'
+      - 'src/**.ts'
+      - 'src/**.tsx'
+      - 'src/**.json'
 
 jobs:
   build:
