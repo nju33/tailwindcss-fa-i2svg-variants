@@ -1,6 +1,6 @@
-[tailwindcss-fa-svg-loading-variants](README.md) / Exports
+[tailwindcss-fa-i2svg-variants](README.md) / Exports
 
-# tailwindcss-fa-svg-loading-variants
+# tailwindcss-fa-i2svg-variants
 
 ## Table of contents
 

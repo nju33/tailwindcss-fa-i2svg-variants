@@ -1,4 +1,4 @@
-[tailwindcss-fa-svg-loading-variants](../README.md) / [Exports](../modules.md) / tailwindcss
+[tailwindcss-fa-i2svg-variants](../README.md) / [Exports](../modules.md) / tailwindcss
 
 # Module: tailwindcss
 

@@ -1,4 +1,4 @@
-[tailwindcss-fa-svg-loading-variants](../README.md) / [Exports](../modules.md) / plugin
+[tailwindcss-fa-i2svg-variants](../README.md) / [Exports](../modules.md) / plugin
 
 # Module: plugin
 
@@ -14,4 +14,4 @@
 
 • `Const` **faSvgLoadingVariantsPlugin**: *void*
 
-Defined in: plugin.ts:38
+Defined in: [plugin.ts:38](https://github.com/nju33/tailwindcss-fa-i2svg-variants/blob/6b0bce4/src/plugin.ts#L38)
