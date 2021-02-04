@@ -35,19 +35,4 @@ jobs:
             yarn-
       - run: yarn
       - run: yarn build
-      - uses: actions/cache@v2
-        id: browser-stack-local-cache
-        with:
-          path: bin
-          key: v1-browser-stack-local-cache
-      - if: steps.browser-stack-local-cache.outputs.cache-hit != 'true'
-        run: |
-          curl -sSfO https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
-          (cd bin && unzip ../BrowserStackLocal-linux-x64.zip)
-      - name: BrowserStack Action
-        uses: 'browserstack/github-actions@master'
-        with:
-          username: ${{ secrets.BROWSERSTACK_USERNAME }}
-          access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-      - run: yarn ci:test
       - run: yarn publish --tag "$(node -p 'require(`./package.json`).version')"
